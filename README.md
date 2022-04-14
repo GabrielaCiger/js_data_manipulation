@@ -40,6 +40,6 @@ Maintenant nous allons extraire la partie qui formate les données pour l'affich
 
 Faire valider par le formateur.
 
-Copiez-coller les méthodes `getCitiesByDept` et `displayCity`, vous en aurez besoin pour les exercices suivants.
+Copiez-coller les fonctions `getCitiesByDept` et `displayCity`, vous en aurez besoin pour les exercices suivants.
 
 Puis basculez sur la branche `exo-3`.
