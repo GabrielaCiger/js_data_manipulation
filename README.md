@@ -31,7 +31,7 @@ Nous allons donc commencer par extraire la partie qui parcourt la liste filtrée
 
 Maintenant nous allons extraire la partie qui formate les données pour l'affichage.
 
-1. Écrivez une fonction `displayCity` qui prend en paramètre les données d'une commune (`city`), c'est à dire un élément du tableau `cities` ou `getCitiesByDept`, et retourne sous forme de chaîne de caractères `"xx - nom de la ville"`.
+1. Écrivez une fonction `displayCity` qui prend en paramètre les données d'une commune (`city`), c'est à dire un élément du tableau `cities` ou `getCitiesByDept`, et retourne sous forme de chaîne de caractères `"Code département - nom de la ville"`. (exemple : `74 - Annecy`)
 2. En utilisant les fonctions précédentes, affichez la liste de villes de Haute-Savoie dans la console.
 
 
