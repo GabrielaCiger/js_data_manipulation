@@ -3,10 +3,28 @@
     <head>
         <title>JS Data Manipulation</title>
         <meta charset="utf-8">
-        <script src="cities.js"></script>
-        <script src="script.js"></script>
+
     </head>
     <body>
       <h1>Villes de France</h1>
+
+
+      <div>
+          <form id="inputForm">
+              <label for="inputText">Departement n.: </label><input type="text" id="inputText">
+              <button type="submit" id="searchCities">Search</button>
+              <br>
+              <label for="text">Search a city</label><div id="text"></div>
+              <input oninput="searchCity()" type="text" id="input">
+          </form>
+      </div>
+
+      <div id="divDepartement">
+          <h2>Please, enter a department number</h2>
+      </div>
     </body>
+
+    <script src="cities.js"></script>
+    <script defer src="script.js"></script>
+
 </html>
