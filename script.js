@@ -1,15 +1,18 @@
 console.log(`${cities.length} communes chargées`);
 
-let deptArray = [];
+const invalidPop = cities.map(city => typeof city.population !== 'number');
+console.log(invalidPop);
+
 let arrayCities = cities.map(city => {
     return {...city, nomWithoutSpecChar: removeSpecChar(city.nom)};
 });
 
-let searchArray = [];
+let deptArray = [];
 let deptArraySorted = [];
+let searchArray = [];
 
 function getCitiesByDept(department) {
-    return cities.filter((city) => city.codeDepartement === department);
+    return arrayCities.filter((city) => city.codeDepartement === department);
 }
 
 function displayNoMatchMessage() {
@@ -122,17 +125,18 @@ function searchCity() {
 }
 
 function sortInAlphabeticalOrder() {
-    divDepartement.innerHTML = ""; // Clear previous results
-    const checkBox = document.getElementById("byAlphabet");
-    if (checkBox.checked) {
-        const citiesToSort = searchArray.length > 0 ? searchArray : arrayCities;
+    divDepartement.innerHTML = "";
+    const citiesToSort = searchArray.length > 0 ? searchArray : arrayCities;
+
+    if (document.getElementById("byAlphabet").checked) {
         citiesToSort.sort((a, b) => a.nomWithoutSpecChar.localeCompare(b.nomWithoutSpecChar));
-        displayCities(citiesToSort);
     } else {
-        const uncheckedSort = searchArray.length > 0 ? searchArray : arrayCities;
-        displayCities(uncheckedSort);
+        citiesToSort.length = 0;
+        citiesToSort.push(...searchArray);
     }
+    displayCities(citiesToSort);
 }
+
 
 let range = document.getElementById("myRange");
 let rangeDiv = document.getElementById("minPop");

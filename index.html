@@ -36,7 +36,7 @@
                       <!-- Checkbox for Sorting -->
                       <div id="sortBy" class="mb-3">
                           <div class="form-check">
-                              <input type="checkbox" id="byAlphabet" class="custom-checkbox" onclick="sortInAlphabeticalOrder()">
+                              <input type="radio" name="sortOrder" id="byAlphabet" class="custom-checkbox" onclick="sortInAlphabeticalOrder()">
                               <label class="form-check-label ms-2" for="byAlphabet">
                                   Sort in alphabetical order
                               </label>
@@ -48,7 +48,7 @@
                               <div class="col-md-8">
                                   <div class="form-group">
                                       <label for="myRange" class="form-label">Select Minimum Population:</label>
-                                      <input type="range" min="0" max="1000000" value="100000" step="50000" class="form-range" id="myRange">
+                                      <input type="range" min="0" max="1000000" value="0" step="50000" class="form-range" id="myRange">
                                       <div id="minPop" class="mt-2"></div>
                                   </div>
                               </div>
