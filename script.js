@@ -128,6 +128,9 @@ function sortInAlphabeticalOrder() {
         const citiesToSort = searchArray.length > 0 ? searchArray : arrayCities;
         citiesToSort.sort((a, b) => a.nomWithoutSpecChar.localeCompare(b.nomWithoutSpecChar));
         displayCities(citiesToSort);
+    } else {
+        const uncheckedSort = searchArray.length > 0 ? searchArray : arrayCities;
+        displayCities(uncheckedSort);
     }
 }
 
