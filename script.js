@@ -1,91 +1,84 @@
 console.log(`${cities.length} communes chargées`);
 
-function ready(callback) {
-  if (document.readyState != 'loading'){
+let deptArray = [];
+let arrayCities = cities.map(city => {
+    return {...city, nomWithoutSpecChar: removeSpecChar(city.nom)};
+});
 
-      /* The document.readyState property in JavaScript
-      represents the loading status of the current HTML document. */
-
-    callback();
-  } else {
-    document.addEventListener('DOMContentLoaded', callback);
-
-    /* Adding an event listener to a document using
-    JavaScript’s addEventListener method allows you
-    to execute a specified function when a specific
-    event occurs (e.g., click, mouseover, load). */
-  }
-}
-
-// insérer votre code ci-dessous
-
-/* * Exercise 4.1 */
-
-// crée en mémoire une structure de données pour stocker un div
-
-function main() {
-
-    // crée en mémoire une structure de données pour stocker un div
-    const el = document.createElement('div');
-    el.innerHTML =  'Je suis un div';
-
-    // insère le div dans le DOM (cela l'affiche)
-    document.body.appendChild(el);
-
-}
-
-// ready(main);
-
-/* On the HTML page we can see the text we inserted into el.innerHTML */
-
-/* ! Exercise 4.2 */
+let searchArray = [];
+let deptArraySorted = [];
 
 function getCitiesByDept(department) {
     return cities.filter((city) => city.codeDepartement === department);
 }
 
-function showCitiesInDiv(index){
-    let filteredCities = getCitiesByDept(index);
+function displayNoMatchMessage() {
+    divDepartement.innerHTML = "";
+    const noMatchMessage = document.createElement("h4");
+    noMatchMessage.textContent = "No city matches the search.";
+    divDepartement.appendChild(noMatchMessage);
+}
 
-    const divDepartement = document.getElementById("divDepartement");
+function removeSpecChar(input){
+    input = input.normalize('NFD')
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLocaleLowerCase();
+    return input;
+}
 
-    const titleDepartement = document.createElement("h2");
-    titleDepartement.textContent = `Departement ${index}`
-    divDepartement.appendChild(titleDepartement);
+function displayCities(citiesArray) {
+    divDepartement.innerHTML = "";
+    divDepartement.classList.add("row", "g-4", "mt-4");
 
-    const numberCities = document.createElement("h3");
-    numberCities.textContent = "Result : " + filteredCities.length + " cities found";
-    divDepartement.appendChild(numberCities);
+    citiesArray.forEach((matchedCity) => {
+        // Create the card container
+        const card = document.createElement("div");
+        card.classList.add("card", "card-custom", "shadow-sm");
 
-    filteredCities.forEach((city) => {
+        // Create the card body
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
 
-        let divCity = document.createElement("div");
-        divCity.className = "cityContainer";
-        divDepartement.appendChild(divCity);
+        // Create and append the card title
+        const cardTitle = document.createElement("h5");
+        cardTitle.classList.add("card-title");
+        cardTitle.textContent = matchedCity.nom;
+        cardBody.appendChild(cardTitle);
 
-        let nameCity = document.createElement("h4");
-        nameCity.textContent = `${city.nom}`;
-        divCity.appendChild(nameCity);
+        // Create and append the card text
+        const cardText = document.createElement("p");
+        cardText.classList.add("card-text", "text-center");
+        cardText.textContent = `Population: ${matchedCity.population}`;
+        cardBody.appendChild(cardText);
 
+        // Append the card body to the card
+        card.appendChild(cardBody);
+
+        // Create a column to hold the card
+        const col = document.createElement("div");
+        col.classList.add("col-md-4", "d-flex", "justify-content-center");
+
+        // Append the card to the column
+        col.appendChild(card);
+
+        // Append the column to the row
+        divDepartement.appendChild(col);
     });
-};
-
-// showCitiesInDiv("38");
-
-
-
-/* ! Exercise 4.3 */
+}
 
 const searchInputIndex = document.getElementById("inputText");
 let searchButton = document.getElementById("searchCities");
-let deptArray = [];
+
 searchButton.addEventListener("click", function(event){
     event.preventDefault();
     const divDepartement = document.getElementById("divDepartement");
 
     if (!searchInputIndex.value || searchInputIndex.value.trim() === "") {
         divDepartement.innerHTML = "";
-        const searchPage = document.createElement("h2");
+        deptArray = [];
+        const searchPage = document.createElement("h3");
+        searchPage.classList = "text-center mt-4";
         searchPage.textContent = `Please, enter a department number`
         divDepartement.appendChild(searchPage);
     } else {
@@ -98,53 +91,70 @@ searchButton.addEventListener("click", function(event){
             divDepartement.appendChild(errorPage);
         } else {
             divDepartement.innerHTML = "";
-            showCitiesInDiv(searchInputIndex.value);
+            displayCities(deptArray);
         }
     }
-});
-
-/* ! Exercise 4.4 */
-
-function removeSpecChar(input){
-    input = input.normalize('NFD')
-        .replace(/[^a-zA-Z0-9]/g, " ")
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLocaleLowerCase();
-    return input;
-}
-
-let arrayCities = cities.map(city => {
-    return { ...city, nomNoSpecialChar: removeSpecChar(city.nom) };
 });
 
 function searchCity() {
     let userInput = document.getElementById("input").value;
     userInput = removeSpecChar(userInput);
 
+    if (deptArray.length > 0) {
+        deptArraySorted = deptArray.map(city => {
+            return { ...city, nomWithoutSpecChar: removeSpecChar(city.nom) };
+        });
+    }
+
     divDepartement.innerHTML = "";
 
     if (deptArray.length === 0) {
-
-        let searchArray = arrayCities.filter((city) => city.nom.includes(userInput));
-
-        if (searchArray.length === 0) {
-
-            const noMatchMessage = document.createElement("h4");
-            noMatchMessage.textContent = `No city matches the search.`;
-            divDepartement.appendChild(noMatchMessage);
-
-        } else {
-
-            searchArray.forEach((matchedCity) => {
-                const cityName = document.createElement("h4");
-                cityName.textContent = `${matchedCity.nom}`;
-                divDepartement.appendChild(cityName);
-            });
-        }
+        searchArray = arrayCities.filter((city) => city.nomWithoutSpecChar.includes(userInput));
+    } else {
+        searchArray = deptArraySorted.filter((city) => city.nomWithoutSpecChar.includes(userInput));
     }
 
-    document.getElementById('text').innerHTML = userInput;
+    if (searchArray.length === 0) {
+        displayNoMatchMessage();
+    } else {
+        displayCities(searchArray);
+    }
 }
 
+function sortInAlphabeticalOrder() {
+    divDepartement.innerHTML = ""; // Clear previous results
+    const checkBox = document.getElementById("byAlphabet");
+    if (checkBox.checked) {
+        const citiesToSort = searchArray.length > 0 ? searchArray : arrayCities;
+        citiesToSort.sort((a, b) => a.nomWithoutSpecChar.localeCompare(b.nomWithoutSpecChar));
+        displayCities(citiesToSort);
+    }
+}
 
+let range = document.getElementById("myRange");
+let rangeDiv = document.getElementById("minPop");
+
+let valueOutput = document.createElement("p");
+rangeDiv.appendChild(valueOutput);
+
+function sortByPopulation() {
+    divDepartement.innerHTML = "";
+
+    if (deptArray.length === 0) {
+        searchArray = arrayCities.filter(city => city.population >= range.value);
+    } else {
+        deptArraySorted = deptArray.map(city => {
+            return { ...city, nomWithoutSpecChar: removeSpecChar(city.nom) };
+        });
+        searchArray = deptArraySorted.filter(city => city.population >= range.value);
+    }
+    displayCities(searchArray);
+}
+
+range.addEventListener("input", function() {
+    range.oninput = function() {
+        valueOutput.textContent = `Min. population : ${this.value}`;
+    }
+    sortByPopulation();
+})
 

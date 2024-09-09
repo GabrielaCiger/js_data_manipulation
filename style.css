@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playwrite+FR+Trad:wght@100..400&display=swap');
+
+body {
+    background-image: url("https://flagdownload.com/wp-content/uploads/Flag_of_France-4096x2731.png");
+    background-repeat: repeat-y;
+    background-size: 100%;
+}
+
+.old-standard-tt-regular {
+    font-family: "Old Standard TT", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.card-custom {
+    width: 18rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+}
+.card-custom .card-body {
+    flex: 1;
+}
+
+#siteTitle {
+    font-family: "Old Standard TT", serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+h5 {
+    font-family: "Old Standard TT", serif;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -12px;
+    background: transparent;
+    background-image: url("images/francais.png");
+    background-size: 100%;
+    height: 2rem;
+    width: 2rem;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    background: transparent;
+    background-image: url("images/baguette-removebg-preview.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat-x;
+    border-radius: 0.5rem;
+    height: 1rem;
+}
+
+.custom-checkbox {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.form-check-label {
+    position: relative;
+    padding-left: 2rem;
+    cursor: pointer;
+}
+
+
+.form-check-label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background-image: url('images/macaron2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translateY(-50%);
+    transition: background-image 0.2s ease;
+}
+
+.custom-checkbox:checked + .form-check-label::before {
+    background-image: url('images/macaron.png');
+}
