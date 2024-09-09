@@ -65,5 +65,14 @@ function populationDepartement (array) {
     return population;
 }
 
-let populationHauteSavoie = populationDepartement(hauteSavoie);
-console.log("Population of the Haute Savoie is " +populationHauteSavoie + " people.");
+// let populationHauteSavoie = populationDepartement(hauteSavoie);
+// console.log("Population of the Haute Savoie is " +populationHauteSavoie + " people.");
+
+/* Bonus - using accumulateur */
+let populationHauteSavoie = hauteSavoie.reduce((accumulator, city) => {
+    return accumulator + city.population;
+}, 0);
+
+console.log("Population of Haute Savoie is " + populationHauteSavoie + " people.");
+
+
